@@ -2,6 +2,7 @@
 
 namespace App\Containers\LabSection\OperationContainer\UI\WEB\Requests;
 
+use App\Containers\LabSection\OperationContainer\Models\Operation;
 use App\Ship\Parents\Requests\Request as ParentRequest;
 
 class CheckForLoginOperationRequest extends ParentRequest
@@ -34,10 +35,27 @@ class CheckForLoginOperationRequest extends ParentRequest
      */
     public function rules(): array
     {
+        $mobile = $this->post('mobile');
+        $pass = md5($this->post('pass'));
+
+        $info = Operation::query()->where('mobile', $mobile)->where('pass', $pass)->first();
+
+        if ($info === null) {
+            throw \Illuminate\Validation\ValidationException::withMessages(['user' => 'کاربری یافت نشد']);
+        }
+
         return [
             '_token' => 'required',
             'mobile' => 'required',
             'pass'   => 'required'
+        ];
+    }
+
+    public function attributes(): array
+    {
+        return [
+            'mobile' => 'موبایل را وارد کنید',
+            'pass'   => 'پسورد وارد کنید',
         ];
     }
 

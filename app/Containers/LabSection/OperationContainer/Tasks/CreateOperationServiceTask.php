@@ -3,7 +3,7 @@
 namespace App\Containers\LabSection\OperationContainer\Tasks;
 
 use App\Containers\LabSection\OperationContainer\Data\Repositories\ServicesRepository;
-use App\Containers\LabSection\OperationContainer\Models\Services;
+use App\Containers\LabSection\OperationContainer\Models\Service;
 use App\Ship\Exceptions\CreateResourceFailedException;
 use App\Ship\Parents\Tasks\Task as ParentTask;
 use Exception;
@@ -18,7 +18,7 @@ class CreateOperationServiceTask extends ParentTask
     /**
      * @throws CreateResourceFailedException
      */
-    public function run(array $data): Services
+    public function run(array $data): Service
     {
         try {
             return $this->repository->create($data);

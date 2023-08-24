@@ -5,18 +5,13 @@
 @endif
 @php
     if(!Cache::get('operation')) die('');
-
-		$url = env('Credit_SMS_URL_Api');
-		$param = array();
-
-		$handler = curl_init($url);
+		$handler = curl_init(env('CREDIT_SMS_URL_API'));
 		curl_setopt($handler, CURLOPT_CUSTOMREQUEST, "POST");
-		curl_setopt($handler, CURLOPT_POSTFIELDS, $param);
+		curl_setopt($handler, CURLOPT_POSTFIELDS, []);
 		curl_setopt($handler, CURLOPT_RETURNTRANSFER, true);
-		$response2 = curl_exec($handler);
+		$result = curl_exec($handler);
         curl_close($handler);
-        $response=json_decode($response2,true);
-
+        $response = json_decode($result, true);
 @endphp
 <!DOCTYPE html>
 <html lang="fa" class="overflow-unset">
@@ -40,9 +35,10 @@
     <button class="btn btn-icon btn-transparent-dark order-1 order-lg-0 me-2 ms-lg-2 me-lg-0" id="sidebarToggle">
         <i class="bx bx-menu bx-sm"></i>
     </button>
-    <a class="navbar-brand pe-3 ps-4 ps-lg-2" href="/operation/dashboard">پنل اپراتور</a>
+    <a class="navbar-brand pe-3 ps-4 ps-lg-2" href="/operation/dashboard">اپراتور - {{ operationInfo(Cache::get('operation')['id']) }} </a>
 
-    <!-- Navbar Items-->
+
+        <!-- Navbar Items-->
     <ul class="navbar-nav align-items-center ms-auto">
 
         <!-- User Dropdown-->
@@ -166,7 +162,7 @@
                                 <div class="row align-items-center">
                                     <div class="col-xl-8 col-xxl-12">
                                         <div class="text-center text-xl-start text-xxl-center mb-4 mb-xl-0 mb-xxl-4">
-                                            <h1 class="text-primary">اپراتور گرامی خوش آمدید</h1>
+                                            <h1 class="text-primary">{{ operationInfo(Cache::get('operation')['id']) }} عزیز خوش آمدید </h1>
                                             {{-- <p class="text-gray-700 mb-0">اینجا برای شما کلی المان ها و طراحی های حرفه--}}
                                             {{--                                                ای تدارک دیده ایم نمونه ها مشاهده کنید لذت ببرید. در صورت رضایت نسخه--}}
                                             {{--                                                اصلی آن را از راستچین خریداری نمایید.</p>--}}

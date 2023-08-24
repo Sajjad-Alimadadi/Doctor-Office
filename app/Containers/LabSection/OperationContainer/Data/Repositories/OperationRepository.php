@@ -5,7 +5,7 @@ namespace App\Containers\LabSection\OperationContainer\Data\Repositories;
 use App\Containers\LabSection\DoctorContainer\Models\Doctor;
 use App\Containers\LabSection\DoctorContainer\Models\Skill;
 use App\Containers\LabSection\OperationContainer\Models\Operation;
-use App\Containers\LabSection\OperationContainer\Models\Services;
+use App\Containers\LabSection\OperationContainer\Models\Service;
 use App\Containers\LabSection\PatientContainer\Models\Patient;
 use App\Containers\LabSection\VisitContainer\Models\Visit;
 use App\Containers\LabSection\VisitContainer\Models\VisitImage;
@@ -32,17 +32,17 @@ class OperationRepository extends ParentRepository
 
     public function getAllDoctorSkill(): array|Collection
     {
-        return Skill::query()->get();
+        return Skill::query()->orderBy('id', 'DESC')->get();
     }
 
     public function getAllOperationService(): array|Collection
     {
-        return Services::query()->get();
+        return Service::query()->orderBy('id', 'DESC')->get();
     }
 
     public function getAllService(): array|Collection
     {
-        $array['service'] = Services::query()->get();
+        $array['service'] = Service::query()->get();
         $patient = Patient::query()->get();
         $doctor = Doctor::query()->get();
         $array['doctor'] = $doctor;
@@ -65,29 +65,27 @@ class OperationRepository extends ParentRepository
 
     public function getAllDoctorOperation(): mixed
     {
-        return Doctor::query()->get();
+        return Doctor::query()->orderBy('id', 'DESC')->get();
     }
 
     public function getAllPatientOperation(): mixed
     {
-        return Patient::query()->get();
+        return Patient::query()->orderBy('id', 'DESC')->get();
     }
 
-    public function sendSMS(array $data): int|null
+    public function sendSMS(array $data): int|string|null
     {
-        $Visit = Visit::query()->where('id', $data['visit_id'])->get()->first();
+        $visit = Visit::query()->where('id', $data['visit_id'])->get()->first();
+        $doctor = Doctor::query()->where('id', $visit['doctor_id'])->get()->first();
+        $patient = Patient::query()->where('id', $visit['patient_id'])->get()->first();
 
-        $doctor = Doctor::query()->where('id', $Visit['doctor_id'])->get()->first();
-
-        $patient = Patient::query()->where('id', $Visit['patient_id'])->get()->first();
-
-        $hashLink = env('Url') . "/show/" . $Visit['hash'];
+        $hashLink = env('URL') . "/show/" . $visit['hash'];
         $doctorName = $doctor['name'] . " " . $doctor['family'];
         $doctorMobile = $doctor['mobile'];
         $patientName = $patient['name'] . " " . $patient['family'];
         $patientMobile = $patient['mobile'];
 
-        $apiURL = env('Send_SMS_URL_Api');
+        $apiURL = env('SEND_SMS_URL_API');
 
         if ($data['type'] === 'd') {
             $text = " پزشک گرامی " . $doctorName . " سلام ، تصویر رادیولوژی بیمار شما ، " . $patientName . " در لینک زیر قابل مشاهده است " . $hashLink;
@@ -104,6 +102,7 @@ class OperationRepository extends ParentRepository
             $responseBody = json_decode($response->getBody(), true);
             return $statusCode;
         } else {
+//            return smsPhoto($patientMobile, env('APP_NAME'), $patientName, $visit['hash']);
             $text = $patientName . " سلام ، تصویر رادیولوژی شما در لینک زیر قابل مشاهده است " . $hashLink;
             // POST Data
             $postInput = [

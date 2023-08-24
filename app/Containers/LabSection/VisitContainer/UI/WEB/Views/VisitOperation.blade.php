@@ -6,7 +6,7 @@
 @php
     if(!Cache::get('operation')) die('');
 
-    	$url = env('Credit_SMS_URL_Api');
+    	$url = env('CREDIT_SMS_URL_API');
 		$param = array();
 
 		$handler = curl_init($url);
@@ -39,7 +39,7 @@
     <button class="btn btn-icon btn-transparent-dark order-1 order-lg-0 me-2 ms-lg-2 me-lg-0" id="sidebarToggle">
         <i class="bx bx-menu bx-sm"></i>
     </button>
-    <a class="navbar-brand pe-3 ps-4 ps-lg-2" href="/operation/dashboard">پنل اپراتور</a>
+    <a class="navbar-brand pe-3 ps-4 ps-lg-2" href="/operation/dashboard">اپراتور - {{ operationInfo(Cache::get('operation')['id']) }} </a>
 
     <!-- Navbar Items-->
     <ul class="navbar-nav align-items-center ms-auto">
@@ -174,6 +174,14 @@
                     <div class="card-header"></div>
                     <div class="card-body">
 
+                        @if (session()->has('CreateVisitResult') )
+                            <div class="alert alert-success alert-solid mt-3"
+                                 role="alert">{{ session('CreateVisitResult') }}</div>
+                            @php
+                                session()->forget('CreateVisitResult');
+                            @endphp
+                        @endif
+
                         @if ($errors->any())
                             <div class="alert alert-danger">
                                 <ul>
@@ -195,6 +203,7 @@
                                 <th>نسخه</th>
                                 <th>ضمیمه</th>
                                 <th>اطلاعات بیشتر</th>
+                                <th>لینک</th>
                                 <th>عملیات</th>
                             </tr>
                             </thead>
@@ -207,6 +216,7 @@
                                 <th>نسخه</th>
                                 <th>ضمیمه</th>
                                 <th>اطلاعات بیشتر</th>
+                                <th>لینک</th>
                                 <th>عملیات</th>
                             </tr>
                             </tfoot>
@@ -216,7 +226,7 @@
                             @if ($result)
                                 @foreach($result as $item)
                                     <tr>
-                                        <td>{{ $item->petient->name." ".$item->petient->family }}</td>
+                                        <td>{{ $item->patient->name." ".$item->patient->family }}</td>
                                         <td>{{ $item->doctor->name." ".$item->doctor->family }}</td>
                                         <td>{{ $item->service->title }}</td>
                                         <td>{{ $item['date'] }}</td>
@@ -228,7 +238,7 @@
                                         </td>
                                         <td>
                                             @if(isset($item['file']))
-                                                <a download="{{ $item->petient->name." ".$item->petient->family }}"
+                                                <a download="{{ $item->patient->name." ".$item->patient->family }}"
                                                    href="{{ '/visit/'.$item['file'] }}"
                                                    class="badge bg-primary text-white rounded-pill">دانلود</a>
                                                 <a href="{{ 'delete/attach/'.$item['id'] }}"
@@ -241,6 +251,10 @@
                                                 class="btn-sm btn-purple btn-icon" type="button"><i
                                                     class="fas fa-arrow-left"></i></button>
                                             <span class="badge bg-info text-white rounded-pill">  @php echo imageVisitsCount($item['id'])." تصویر " @endphp</span>
+                                        </td>
+                                        <td>
+                                            <a target="_blank" href="{{ env('URL')."/show/".$item['hash'] }}"
+                                               class="badge bg-warning text-white rounded-pill">نمایش</a>
                                         </td>
                                         <td>
                                             <a href="{{ 'delete/'.$item['id'] }}"

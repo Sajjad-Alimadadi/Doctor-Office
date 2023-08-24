@@ -9,19 +9,19 @@ use Illuminate\Support\Facades\Cache;
 
 class VisitRepository extends ParentRepository
 {
-    public function list()
+    public function list(): Collection|array
     {
-        return $visit = Visit::query()->where(['patient_id' => Cache::get('patient')['id']])->with(['doctor', 'petient', 'service'])->get();
+        return Visit::query()->where(['patient_id' => Cache::get('patient')['id']])->with(['doctor', 'patient', 'service'])->orderBy('id', 'DESC')->get();
     }
 
-    public function doctorList()
+    public function doctorList(): Collection|array
     {
-        return $visit = Visit::query()->where(['doctor_id' => Cache::get('doctor')['id']])->with(['doctor', 'petient', 'service'])->get();
+        return Visit::query()->where(['doctor_id' => Cache::get('doctor')['id']])->with(['doctor', 'patient', 'service'])->orderBy('id', 'DESC')->get();
     }
 
     public function operationList(): Collection|array
     {
-        return $visit = Visit::query()->with(['doctor', 'petient', 'service'])->get();
+        return Visit::query()->with(['doctor', 'patient', 'service'])->orderBy('id', 'DESC')->get();
     }
 
 }

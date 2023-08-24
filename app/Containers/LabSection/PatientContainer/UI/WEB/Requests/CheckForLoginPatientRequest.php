@@ -2,6 +2,7 @@
 
 namespace App\Containers\LabSection\PatientContainer\UI\WEB\Requests;
 
+use App\Containers\LabSection\PatientContainer\Models\Patient;
 use App\Ship\Parents\Requests\Request as ParentRequest;
 
 class CheckForLoginPatientRequest extends ParentRequest
@@ -34,12 +35,30 @@ class CheckForLoginPatientRequest extends ParentRequest
      */
     public function rules(): array
     {
+        $mobile = $this->post('mobile');
+        $pass = md5($this->post('pass'));
+
+        $info = Patient::query()->where('mobile', $mobile)->where('pass', $pass)->first();
+
+        if ($info === null) {
+            throw \Illuminate\Validation\ValidationException::withMessages(['user' => 'کاربری یافت نشد']);
+        }
+
         return [
             '_token' => 'required',
             'mobile' => 'required',
             'pass'   => 'required'
         ];
     }
+
+    public function attributes(): array
+    {
+        return [
+            'mobile' => 'موبایل را وارد کنید',
+            'pass'   => 'پسورد وارد کنید',
+        ];
+    }
+
 
     /**
      * Determine if the user is authorized to make this request.

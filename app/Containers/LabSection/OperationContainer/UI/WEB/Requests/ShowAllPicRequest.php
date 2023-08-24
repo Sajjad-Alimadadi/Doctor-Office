@@ -38,7 +38,7 @@ class ShowAllPicRequest extends ParentRequest
     {
         return [
 //            '_token' => 'required',
-'id' => 'required|string|exists:visits,hash',
+              'id' => 'required|string|exists:visits,hash',
         ];
     }
 

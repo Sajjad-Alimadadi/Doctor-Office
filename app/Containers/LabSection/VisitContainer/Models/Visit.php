@@ -3,7 +3,7 @@
 namespace App\Containers\LabSection\VisitContainer\Models;
 
 use App\Containers\LabSection\DoctorContainer\Models\Doctor;
-use App\Containers\LabSection\OperationContainer\Models\Services;
+use App\Containers\LabSection\OperationContainer\Models\Service;
 use App\Containers\LabSection\PatientContainer\Models\Patient;
 use App\Ship\Parents\Models\Model as ParentModel;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -31,14 +31,14 @@ class Visit extends ParentModel
         return $this->belongsTo(Doctor::class, 'doctor_id');
     }
 
-    public function petient(): BelongsTo
+    public function patient(): BelongsTo
     {
         return $this->belongsTo(Patient::class, 'patient_id');
     }
 
     public function service(): BelongsTo
     {
-        return $this->belongsTo(Services::class, 'service_id');
+        return $this->belongsTo(Service::class, 'service_id');
     }
 
 }

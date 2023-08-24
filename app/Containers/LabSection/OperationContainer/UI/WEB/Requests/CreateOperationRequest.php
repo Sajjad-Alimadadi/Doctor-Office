@@ -56,6 +56,21 @@ class CreateOperationRequest extends ParentRequest
         ];
     }
 
+    public function attributes(): array
+    {
+        return [
+            'nationalcode' => 'کد ملی را وارد کنید',
+            'mobile' => 'موبایل را وارد کنید',
+            'name' => 'نام وارد کنید',
+            'family' => 'فامیلی وارد کنید',
+            'pass' => 'پسورد وارد کنید',
+            'pass2' => 'تکرار پسورد وارد کنید',
+            'birthday' => 'تولد وارد کنید',
+            'startdate' => 'تاریخ شروع وارد کنید',
+        ];
+    }
+
+
     /**
      * Determine if the user is authorized to make this request.
      */

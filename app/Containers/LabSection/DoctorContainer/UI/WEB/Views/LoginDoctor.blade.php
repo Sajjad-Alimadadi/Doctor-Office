@@ -59,7 +59,7 @@
 
                                     <!-- نام کاربری -->
                                     <div class="mb-3">
-                                        <label class="small mb-1" for="mobile">شماره موبایل</label>
+                                        <label class="small mb-1" for="mobile">نام کاربری</label>
                                         <input class="form-control" name="mobile" type="text" value="{{old('mobile')}}">
                                     </div>
 
@@ -69,10 +69,6 @@
                                         <input class="form-control" name="pass" type="password" value="{{old('pass')}}">
                                     </div>
 
-                                    <a class="action-link" href="../forgetpwd/basic.html">
-                                        فراموشی رمز عبور
-                                        <i class="bx bx-left-arrow-alt"></i>
-                                    </a>
                                     <button type="submit" class="btn btn-primary btn-block w-100">ورود</button>
 
                                     @if ($errors->any())

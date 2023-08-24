@@ -26,4 +26,9 @@ class VisitImage extends ParentModel
      * A resource key to be used in the serialized responses.
      */
     protected string $resourceKey = 'image_visits';
+
+    public function visit()
+    {
+        return $this->belongsTo(Visit::class, 'visit_id');
+    }
 }

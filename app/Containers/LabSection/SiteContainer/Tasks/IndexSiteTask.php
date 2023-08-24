@@ -30,6 +30,7 @@ class IndexSiteTask extends ParentTask
             return $result;
 //            return $this->repository->getParam();
         } catch (Exception $e) {
+            exit($e->getMessage());
             throw new CreateResourceFailedException();
         }
     }

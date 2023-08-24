@@ -6,7 +6,7 @@
 @php
     if(!Cache::get('operation')) die('');
 
-		$url = env('Credit_SMS_URL_Api');
+		$url = env('CREDIT_SMS_URL_API');
 		$param = array();
 
 		$handler = curl_init($url);
@@ -39,7 +39,7 @@
     <button class="btn btn-icon btn-transparent-dark order-1 order-lg-0 me-2 ms-lg-2 me-lg-0" id="sidebarToggle">
         <i class="bx bx-menu bx-sm"></i>
     </button>
-    <a class="navbar-brand pe-3 ps-4 ps-lg-2" href="/operation/dashboard">پنل اپراتور</a>
+    <a class="navbar-brand pe-3 ps-4 ps-lg-2" href="/operation/dashboard">اپراتور - {{ operationInfo(Cache::get('operation')['id']) }} </a>
 
     <!-- Navbar Items-->
     <ul class="navbar-nav align-items-center ms-auto">

@@ -20,7 +20,7 @@ class CreateVisitController extends WebController
             'file'        => $request->file('family'),
         ]);
         $result = app(CreateVisitAction::class)->run($request->toArray());
-        return redirect('/operation/visit')->with('CreateVisitResult', 'ثبت نسخه با موفقیت انجام شد');
+        return redirect('/operation/visit/get')->with('CreateVisitResult', 'ثبت نسخه با موفقیت انجام شد');
     }
 
 }

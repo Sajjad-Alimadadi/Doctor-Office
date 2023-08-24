@@ -21,7 +21,7 @@ class CreatePatientController extends WebController
             'pass2'        => $request->post('pass2'),
         ]);
         $result = app(CreatePatientAction::class)->run($data);
-        return redirect('/patient/login')->with('SignupResult', 'ثبت نام با موفقیت انجام شد');
+        return redirect('/operation/patient/get')->with('SignupResult', 'ثبت نام با موفقیت انجام شد');
     }
 
 }

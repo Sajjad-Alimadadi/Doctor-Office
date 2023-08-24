@@ -23,6 +23,6 @@ class Patient extends ParentModel
 
     public function visits(): HasMany
     {
-        return $this->hasMany(Visit::class, 'petient_id');
+        return $this->hasMany(Visit::class, 'patient_id');
     }
 }

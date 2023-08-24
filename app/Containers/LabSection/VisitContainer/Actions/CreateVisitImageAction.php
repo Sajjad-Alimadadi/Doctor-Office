@@ -7,6 +7,7 @@ use App\Containers\LabSection\VisitContainer\Models\Visit;
 use App\Containers\LabSection\VisitContainer\Models\VisitImage;
 use App\Containers\LabSection\VisitContainer\Tasks\CreateVisitImageTask;
 use App\Ship\Parents\Actions\Action as ParentAction;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Validation\ValidationException;
 
@@ -28,16 +29,17 @@ class CreateVisitImageAction extends ParentAction
             throw ValidationException::withMessages(['operation_id' => ' operation_id Not Found']);
         }
 
-        $destination = base_path() . '/public/visit-image/';
+        $destination = dirname(base_path()) . '/public_html/visit-image';
         if (!is_dir($destination)) {
             mkdir($destination, 0777, true);
         }
-        $destination = $destination . '/';
-        $filename = rand(1111111, 99999999);
+        $destination .= '/';
+        /** @var UploadedFile $file */
         $file = $data['image'];
-        $file->move($destination, $filename . $file->getClientOriginalName());
+        $fileName = md5(rand(1111111, 99999999) . $file->getClientOriginalName()) . '.' . $file->getClientOriginalExtension();
+        $file->move($destination, $fileName);
 
-        $data['image'] = $filename . $file->getClientOriginalName();
+        $data['image'] = $fileName;
         $data['operation_id'] = Cache::get('operation')['id'];
 
 

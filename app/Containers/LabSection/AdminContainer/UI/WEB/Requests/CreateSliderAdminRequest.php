@@ -38,7 +38,7 @@ class CreateSliderAdminRequest extends ParentRequest
     {
         return [
             '_token' => 'required',
-            'file'   => 'required|mimes:jpg,jpeg,png|dimensions:width=1920,height=570|max:10240',
+            'file'   => 'required|mimes:jpg,jpeg,png',
         ];
     }
 

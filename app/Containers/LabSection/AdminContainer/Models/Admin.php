@@ -9,7 +9,13 @@ class Admin extends ParentModel
     public $timestamps = false;
     protected $table = 'admins';
     protected $fillable = [
-
+        'name',
+        'family',
+        'mobile',
+        'username',
+        'pass',
+        'role',
+        'is_active',
     ];
 
     protected $hidden = [

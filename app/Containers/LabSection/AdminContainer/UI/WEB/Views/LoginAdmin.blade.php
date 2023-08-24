@@ -59,7 +59,7 @@
 
                                     <!-- نام کاربری -->
                                     <div class="mb-3">
-                                        <label class="small mb-1" for="mobile">موبایل</label>
+                                        <label class="small mb-1" for="mobile">نام کاربری</label>
                                         <input class="form-control" name="mobile" type="text" value="{{old('mobile')}}">
                                     </div>
 

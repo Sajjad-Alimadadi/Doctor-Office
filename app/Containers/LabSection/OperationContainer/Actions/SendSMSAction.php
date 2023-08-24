@@ -11,9 +11,9 @@ class SendSMSAction extends ParentAction
 
     /**
      * @param array $data
-     * @return int|null
+     * @return int|string|null
      */
-    public function run(array $data): int|null
+    public function run(array $data): int|string|null
     {
         return app(SendSMSTask::class)->run($data);
     }

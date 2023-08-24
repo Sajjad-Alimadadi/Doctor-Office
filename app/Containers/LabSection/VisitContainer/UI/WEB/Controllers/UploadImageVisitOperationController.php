@@ -8,6 +8,10 @@ use App\Ship\Parents\Controllers\WebController;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
+use App\Containers\LabSection\VisitContainer\Models\Visit;
+use App\Containers\LabSection\PatientContainer\Models\Patient;
+use App\Containers\LabSection\DoctorContainer\Models\Doctor;
+
 
 class UploadImageVisitOperationController extends WebController
 {
@@ -17,6 +21,10 @@ class UploadImageVisitOperationController extends WebController
             'visit_id' => $request->route('visit_id'),
         ]);
         $result = app(UploadImageVisitOperationAction::class)->run($data);
-        return View('labSection@visitContainer::uploadImageVisitOperation', ['result' => $result]);
+        
+        $Visit=Visit::query()->where('id', $request->route('visit_id'))->first();
+        $Patient=Patient::query()->where('id', $Visit['patient_id'])->first();
+        $Doctor=Doctor::query()->where('id', $Visit['doctor_id'])->first();
+        return View('labSection@visitContainer::uploadImageVisitOperation', compact('result', 'data','Visit','Patient','Doctor'));
     }
 }

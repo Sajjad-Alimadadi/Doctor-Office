@@ -3,6 +3,9 @@
 namespace App\Containers\LabSection\AdminContainer\UI\WEB\Requests;
 
 use App\Ship\Parents\Requests\Request as ParentRequest;
+use Cassandra\Exception\ValidationException;
+use App\Containers\LabSection\AdminContainer\Models\Admin;
+use Exception;
 
 class CheckForLoginAdminRequest extends ParentRequest
 {
@@ -34,6 +37,15 @@ class CheckForLoginAdminRequest extends ParentRequest
      */
     public function rules(): array
     {
+        $mobile = $this->post('mobile');
+        $pass = md5($this->post('pass'));
+
+        $info = Admin::query()->where('mobile',$mobile)->where('pass',$pass)->first();
+
+        if ($info === null) {
+            throw \Illuminate\Validation\ValidationException::withMessages(['user' => 'کاربری یافت نشد']);
+        }
+
         return [
             '_token' => 'required',
             'mobile' => 'required',

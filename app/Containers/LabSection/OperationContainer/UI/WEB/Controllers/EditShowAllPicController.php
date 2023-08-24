@@ -4,7 +4,9 @@ namespace App\Containers\LabSection\OperationContainer\UI\WEB\Controllers;
 
 use App\Containers\LabSection\OperationContainer\Actions\EditShowAllPicAction;
 use App\Containers\LabSection\OperationContainer\UI\WEB\Requests\EditShowAllPicRequest;
+use App\Containers\LabSection\VisitContainer\Models\VisitImage;
 use App\Ship\Parents\Controllers\WebController;
+use Illuminate\Database\Eloquent\Builder;
 
 class EditShowAllPicController extends WebController
 {
@@ -14,7 +16,11 @@ class EditShowAllPicController extends WebController
             'hash' => $request->route('hash'),
             'id'   => $request->route('id'),
         ]);
-        $result = app(EditShowAllPicAction::class)->run($data);
-        return View('labSection@operationContainer::editShowAllPic', ['result' => $result]);
+        $image = VisitImage::query()->find($data['id']);
+        $photos = VisitImage::query()
+            ->with('visit')->whereHas('visit', function (Builder $query) use ($data) {
+                $query->where('hash', $data['hash']);
+            })->get();
+        return View('labSection@operationContainer::editShowAllPic', compact('image', 'photos'));
     }
 }

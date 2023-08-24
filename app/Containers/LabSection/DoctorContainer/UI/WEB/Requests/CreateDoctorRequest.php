@@ -44,16 +44,26 @@ class CreateDoctorRequest extends ParentRequest
         }
 
         return [
-            '_token'       => 'required',
-            'mobile'       => 'required|string|min:11|max:11|unique:doctors',
-            'nationalcode' => 'required|string|min:10|max:10|unique:doctors',
-            'doctorcode'   => 'required|int',
-            'skill_id'     => 'required|int|exists:skills,id',
-            'name'         => 'required|string',
-            'family'       => 'required|string',
-            'birthday'     => 'required|string',
-            'pass'         => 'required|string',
-            'pass2'        => 'required|string',
+            '_token' => 'required',
+            'mobile' => 'required|string|min:11|max:11|unique:doctors',
+            'doctorcode' => 'required|int',
+            'skill_id' => 'required|exists:skills,id',
+            'name' => 'required|string',
+            'family' => 'required|string',
+            'pass' => 'required|string',
+            'pass2' => 'required|string',
+        ];
+    }
+
+    public function attributes(): array
+    {
+        return [
+            'doctorcode' => 'کد نظام پزشکی وارد کنید',
+            'skill_id' => 'تخصص انتخاب کنید',
+            'name' => 'نام وارد کنید',
+            'family' => 'فامیلی وارد کنید',
+            'pass' => 'پسورد وارد کنید',
+            'pass2' => 'تکرار پسورد وارد کنید',
         ];
     }
 
@@ -68,16 +78,16 @@ class CreateDoctorRequest extends ParentRequest
     protected function prepareForValidation(): void
     {
         $this->merge([
-            '_token'       => $this->post('_token'),
-            'mobile'       => $this->post('mobile'),
+            '_token' => $this->post('_token'),
+            'mobile' => $this->post('mobile'),
             'nationalcode' => $this->post('nationalcode'),
-            'doctorcode'   => $this->post('doctorcode'),
-            'skill_id'     => $this->post('skill_id'),
-            'name'         => $this->post('name'),
-            'family'       => $this->post('family'),
-            'birthday'     => $this->post('birthday'),
-            'pass'         => $this->post('pass'),
-            'pass2'        => $this->post('pass2'),
+            'doctorcode' => $this->post('doctorcode'),
+            'skill_id' => $this->post('skill_id'),
+            'name' => $this->post('name'),
+            'family' => $this->post('family'),
+            'birthday' => $this->post('birthday'),
+            'pass' => $this->post('pass'),
+            'pass2' => $this->post('pass2'),
         ]);
     }
 

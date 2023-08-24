@@ -411,7 +411,7 @@ body.light .shop-cart .table .icon-delete-product,
 body.light .shop-checkout h3,
 body.light .shop-checkout .checkout table.products td.text-price,
 body.light .facts .facts-content .heading-facts h2 {
-    color: #333;
+    color: #FFFFFF!important;
 }
 
 body.light ul.nav.nav-tabs li a, body.light ul.nav.nav-tabs li.active a {
@@ -655,8 +655,8 @@ body.light .shop-checkout .table tbody > tr {
 
 .main-logo {
     position: relative;
-    padding-top: 25px;
-    padding-bottom: 25px;
+    /*padding-top: 25px;*/
+    /*padding-bottom: 25px;*/
 }
 
 .logo-mobile {
@@ -1082,16 +1082,6 @@ ul.nav.nav-tabs li a:hover, ul.nav.nav-tabs li.active a:hover {
 
 #main-slide .item.item-2 {
     background-image: url('../images/slider/bg2.jpg');
-}
-
-#main-slide .item:after {
-    content: "";
-    background: rgba(0, 0, 0, .6);
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    top: 0;
-    left: 0;
 }
 
 #main-slide .item .slider-content {
@@ -5145,7 +5135,7 @@ h4.panel-title a.collapsed:before {
 
 .one-line {
     white-space: nowrap;
-    width: 400px;
+    width: 550px;
     overflow: hidden;
     text-overflow: ellipsis;
 }

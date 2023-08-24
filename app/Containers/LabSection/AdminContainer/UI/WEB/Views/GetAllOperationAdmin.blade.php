@@ -28,7 +28,7 @@
     <button class="btn btn-icon btn-transparent-dark order-1 order-lg-0 me-2 ms-lg-2 me-lg-0" id="sidebarToggle">
         <i class="bx bx-menu bx-sm"></i>
     </button>
-    <a class="navbar-brand pe-3 ps-4 ps-lg-2" href="/admin/dashboard">پنل مدیر</a>
+    <a class="navbar-brand pe-3 ps-4 ps-lg-2" href="/patient/dashboard">مدیر - {{ adminInfo(Cache::get('admin')['id']) }}</a>
 
     <!-- Navbar Items-->
     <ul class="navbar-nav align-items-center ms-auto">
@@ -88,6 +88,11 @@
                         اخبار سایت
                     </a>
 
+                    <a class="nav-link " data-bs-toggle="modal" data-bs-target="#exampleModal2" href="/admin/news">
+                        <div class="nav-link-icon"><i class="bx bx-bar-chart"></i></div>
+                        تغییر پسورد
+                    </a>
+
                     <!-- جدول -->
                     <a class="nav-link" href="/admin/signout">
                         <div class="nav-link-icon"><i class="bx bx-table"></i></div>
@@ -133,6 +138,14 @@
                 <div class="card mb-4">
                     <div class="card-header"></div>
                     <div class="card-body">
+
+                        @if (session()->has('SignupResult') )
+                            <div class="alert alert-success alert-solid mt-3"
+                                 role="alert">{{ session('SignupResult') }}</div>
+                            @php
+                                session()->forget('SignupResult');
+                            @endphp
+                        @endif
 
                         @if (session()->has('result') )
                             <div class="alert alert-success alert-solid mt-3"
@@ -180,8 +193,11 @@
                                         <td>{{ $item['name'] }}</td>
                                         <td>{{ $item['family'] }}</td>
                                         <td>{{ $item['mobile'] }}</td>
-                                        <td><a href="/admin/operation/get/delete/{{$item['id']}}"
-                                               class="btn btn-sm btn-danger" type="button">حذف</a></td>
+                                        <td>
+                                            <button class="btn btn-sm btn-primary" type="button" onclick='myFunction("{{$item['id']}}","{{$item['nationalcode']}}","{{$item['name']}}","{{$item['family']}}","{{$item['mobile']}}","{{$item['startdate']}}","{{$item['birthday']}}")' data-bs-toggle="modal" data-bs-target="#exampleModal">ویرایش</button>
+                                            <a href="/admin/operation/get/delete/{{$item['id']}}"
+                                               class="btn btn-sm btn-danger" type="button">حذف</a>
+                                        </td>
                                     </tr>
                                 @endforeach
                             @endif
@@ -201,12 +217,143 @@
         </footer>
     </div>
 </div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel"></h5>
+                <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="بستن"></button>
+            </div>
+            <div class="modal-body">
+
+                <form id="formAuthentication" action="/admin/operation/update" method="post">
+
+                    @csrf
+
+                    <!-- Equivalent to... -->
+                    <input type="hidden" name="_token" value="{{ csrf_token() }}"/>
+                    <input class="form-control" id="id" name="id" type="hidden">
+
+                <div class="mb-3 text-start">
+                    <label class="small mb-1" for="nationalcode">کد ملی</label>
+                    <input class="form-control" id="nationalcode" name="nationalcode" type="text">
+                </div>
+
+                <div class="mb-3 text-start">
+                    <label class="small mb-1" for="name">نام</label>
+                    <input class="form-control" id="name" name="name" type="text" value="">
+                </div>
+
+                <div class="mb-3 text-start">
+                    <label class="small mb-1" for="family">فامیلی</label>
+                    <input class="form-control" id="family" name="family" type="text" value="">
+                </div>
+
+                <div class="mb-3 text-start">
+                    <label class="small mb-1" for="mobile">موبایل</label>
+                    <input class="form-control" id="mobile" name="mobile" type="text" value="">
+                </div>
+
+                <!-- تاریخ تولد -->
+                <div class="mb-3 text-start">
+                    <label class="small mb-1" for="inputBirthday">تاریخ تولد</label>
+                    <input class="form-control" id="inputBirthday" type="text" name="birthday"
+                           placeholder="تاریخ تولد خود را انتخاب کنید">
+                </div>
+
+                <div class="mb-3 text-start">
+                    <label class="small mb-1" for="startdate">تاریخ شروع</label>
+                    <input class="form-control" id="inputStartDate" type="text" name="startdate"
+                           placeholder="تاریخ شروع را انتخاب کنید">
+                </div>
+
+
+                <div class="mb-3 text-start">
+                    <label class="small mb-1" for="pass">تغییر پسورد</label>
+                    <input class="form-control" name="pass" type="text" value="">
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-primary btn-block w-100">ثبت اطلاعات</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="exampleModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModal2" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel"></h5>
+                <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="بستن"></button>
+            </div>
+            <div class="modal-body text-start">
+
+                <form action="/admin/newpass" method="post">
+                    @csrf
+                    <input type="hidden" name="_token" value="{{ csrf_token() }}"/>
+                    <input class="form-control mb-1" name="id" type="hidden" value="{{Cache::get('admin')['id']}}">
+                    <input dir="rtl" class="form-control mb-1" name="pass" type="text" placeholder="رمز جدید">
+                    <button class="btn btn-sm btn-primary" type="submit">ثبت</button>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
 <script src="/assets/js/jquery.js"></script>
 <script src="/assets/js/bootstrap.bundle.min.js"></script>
 <script src="/assets/js/scripts.js"></script>
 
 <script src="/assets/js/simple-datatables%40latest.js"></script>
 <script src="/assets/js/simple-datatables%40demo.js"></script>
+
+<script src="/assets/js/persian-date.js"></script>
+<script src="/assets/js/persian-datepicker.js"></script>
+<script src="/assets/js/state-city.js"></script>
+
+
+<script>
+
+    let timeout;
+
+    function myFunction(id,nationalcode, name, family, mobile, startdate, birthday) {
+        setTimeout(edit(id,nationalcode, name, family, mobile, startdate, birthday), 1000);
+    }
+
+    function edit(id,nationalcode, name, family, mobile, startdate, birthday) {
+        document.getElementById("id").value = id;
+        // document.getElementById("nationalcode").value = nationalcode;
+        document.getElementById("name").value = name;
+        document.getElementById("family").value = family;
+        // document.getElementById("mobile").value = mobile;
+        document.getElementById("inputStartDate").value = startdate;
+        document.getElementById("inputBirthday").value = birthday;
+
+    }
+
+    // Toggle the side navigation
+    $(document).ready(function () {
+        $('#inputBirthday').persianDatepicker({
+            format: 'YYYY/MM/DD',
+            autoClose: true
+        });
+    });
+
+    $(document).ready(function () {
+        $('#inputStartDate').persianDatepicker({
+            format: 'YYYY/MM/DD',
+            autoClose: true
+        });
+    });
+</script>
 
 </body>
 </html>

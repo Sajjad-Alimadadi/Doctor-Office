@@ -28,7 +28,7 @@
     <button class="btn btn-icon btn-transparent-dark order-1 order-lg-0 me-2 ms-lg-2 me-lg-0" id="sidebarToggle">
         <i class="bx bx-menu bx-sm"></i>
     </button>
-    <a class="navbar-brand pe-3 ps-4 ps-lg-2" href="/patient/dashboard">پنل بیمار</a>
+    <a class="navbar-brand pe-3 ps-4 ps-lg-2" href="/patient/dashboard">{{ patientInfo(Cache::get('patient')['id']) }}</a>
 
     <!-- Navbar Items-->
     <ul class="navbar-nav align-items-center ms-auto">
@@ -111,7 +111,7 @@
                                 <div class="row align-items-center">
                                     <div class="col-xl-8 col-xxl-12">
                                         <div class="text-center text-xl-start text-xxl-center mb-4 mb-xl-0 mb-xxl-4">
-                                            <h1 class="text-primary">بیمار گرامی ، خوش آمدید</h1>
+                                            <h1 class="text-primary">{{ patientInfo(Cache::get('patient')['id']) }} گرامی ، خوش آمدید</h1>
                                             {{-- <p class="text-gray-700 mb-0">اینجا برای شما کلی المان ها و طراحی های حرفه--}}
                                             {{--                                                ای تدارک دیده ایم نمونه ها مشاهده کنید لذت ببرید. در صورت رضایت نسخه--}}
                                             {{--                                                اصلی آن را از راستچین خریداری نمایید.</p>--}}

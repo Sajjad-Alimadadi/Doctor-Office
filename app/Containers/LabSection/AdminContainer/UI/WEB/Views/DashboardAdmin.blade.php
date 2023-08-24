@@ -28,8 +28,7 @@
     <button class="btn btn-icon btn-transparent-dark order-1 order-lg-0 me-2 ms-lg-2 me-lg-0" id="sidebarToggle">
         <i class="bx bx-menu bx-sm"></i>
     </button>
-    <a class="navbar-brand pe-3 ps-4 ps-lg-2" href="/admin/dashboard">پنل مدیر</a>
-
+    <a class="navbar-brand pe-3 ps-4 ps-lg-2" href="/patient/dashboard">مدیر - {{ adminInfo(Cache::get('admin')['id']) }}</a>
     <!-- Navbar Items-->
     <ul class="navbar-nav align-items-center ms-auto">
 
@@ -88,6 +87,11 @@
                         اخبار سایت
                     </a>
 
+                    <a class="nav-link " data-bs-toggle="modal" data-bs-target="#exampleModal" href="/admin/news">
+                        <div class="nav-link-icon"><i class="bx bx-bar-chart"></i></div>
+                        تغییر پسورد
+                    </a>
+
                     <!-- جدول -->
                     <a class="nav-link" href="/admin/signout">
                         <div class="nav-link-icon"><i class="bx bx-table"></i></div>
@@ -125,7 +129,7 @@
                                 <div class="row align-items-center">
                                     <div class="col-xl-8 col-xxl-12">
                                         <div class="text-center text-xl-start text-xxl-center mb-4 mb-xl-0 mb-xxl-4">
-                                            <h1 class="text-primary">مدیر گرامی خوش آمدید</h1>
+                                            <h1 class="text-primary"> مدیریت محترم ، {{ adminInfo(Cache::get('admin')['id']) }} عزیز خوش آمدید</h1>
                                             {{--<p class="text-gray-700 mb-0">اینجا برای شما کلی المان ها و طراحی های حرفه--}}
                                             {{--                                                ای تدارک دیده ایم نمونه ها مشاهده کنید لذت ببرید. در صورت رضایت نسخه--}}
                                             {{--                                                اصلی آن را از راستچین خریداری نمایید.</p>--}}
@@ -147,6 +151,29 @@
         </footer>
     </div>
 </div>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel"></h5>
+                <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="بستن"></button>
+            </div>
+            <div class="modal-body text-start">
+
+                <form action="/admin/newpass" method="post">
+                    @csrf
+                    <input type="hidden" name="_token" value="{{ csrf_token() }}"/>
+                    <input class="form-control mb-1" name="id" type="hidden" value="{{Cache::get('admin')['id']}}">
+                    <input dir="rtl" class="form-control mb-1" name="pass" type="text" placeholder="رمز جدید">
+                    <button class="btn btn-sm btn-primary" type="submit">ثبت</button>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+
 <script src="/assets/js/jquery.js"></script>
 <script src="/assets/js/bootstrap.bundle.min.js"></script>
 <script src="/assets/js/scripts.js"></script>

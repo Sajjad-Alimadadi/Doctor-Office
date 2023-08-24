@@ -5,7 +5,7 @@
 @endif
 @php
     if(!Cache::get('operation')) die('');
-    	$url = env('Credit_SMS_URL_Api');
+    	$url = env('CREDIT_SMS_URL_API');
 		$param = array();
 
 		$handler = curl_init($url);
@@ -38,7 +38,7 @@
     <button class="btn btn-icon btn-transparent-dark order-1 order-lg-0 me-2 ms-lg-2 me-lg-0" id="sidebarToggle">
         <i class="bx bx-menu bx-sm"></i>
     </button>
-    <a class="navbar-brand pe-3 ps-4 ps-lg-2" href="/operation/dashboard">پنل اپراتور</a>
+    <a class="navbar-brand pe-3 ps-4 ps-lg-2" href="/operation/dashboard">اپراتور - {{ operationInfo(Cache::get('operation')['id']) }} </a>
 
     <!-- Navbar Items-->
     <ul class="navbar-nav align-items-center ms-auto">
@@ -146,7 +146,7 @@
                         <div class="row align-items-center justify-content-between pt-3 is-rtl">
                             <div class="col-auto mb-3">
                                 <h1 class="page-header-title">
-                                    <div class="page-header-icon">
+                                    <span class="page-header-icon">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                              viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                                              stroke-linecap="round" stroke-linejoin="round"
@@ -154,7 +154,7 @@
                                             <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
                                             <circle cx="12" cy="7" r="4"></circle>
                                         </svg>
-                                    </div>
+                                    </span>
                                     ثبت تصویر
                                 </h1>
                             </div>
@@ -166,6 +166,27 @@
             <!-- Main page content-->
 
             <div class="container-xl px-4 mt-4 is-rtl">
+
+                <div class="card my-5">
+                    <div class="card-header">اطلاعات</div>
+                        <div class="card-body">
+                            <table class="table table-striped table-condensed table-hover">
+                                <tr>
+                                    <th>بیمار:</th>
+                                    <td class="text-right">{{ $Patient['name'] }} {{ $Patient['family'] }}</td>
+                                </tr>
+                                <tr>
+                                    <th>پزشک:</th>
+                                    <td class="text-right">{{ $Doctor['name'] }} {{ $Doctor['family'] }}</td></td>
+                                </tr>
+                                <tr>
+                                    <th>تاریخ ویزیت:</th>
+                                    <td class="text-right">{{ $Visit['date'] }}</td>
+                                </tr>
+                            </table>
+                        </div>
+                </div>
+
                 <!-- Account page navigation-->
                 <hr class="mt-0 mb-4">
 
@@ -187,8 +208,7 @@
                                                  src="/assets/img/svg/profile-1.png" alt="">
                                         </label>
                                         <div class="small font-italic text-muted mb-4">فرمت تصویر قابل قبول است</div>
-
-                                        <form class="mb-3" action="/visit-image/create/{{ Request::segment(4)  }}"
+                                        <form class="mb-3" action="/visit-image/create/{{ request()->route('visit_id')  }}"
                                               enctype="multipart/form-data" method="post">
 
                                             @csrf
@@ -264,9 +284,9 @@
                                             با این گزینه تمام عکس ها برای پزشک یا بیمار ارسال می شود
                                         </p>
 
-                                        <button class="btn btn-outline-indigo" onclick="location.href='/operation/sms/{{ Request::segment(4)??0}}/d'" type="button">ارسال به پزشک</button>
+                                        <a class="btn btn-outline-indigo" href="/operation/sms/{{ $data['visit_id'] }}/d">ارسال به پزشک</a>
 
-                                        <button class="btn btn-outline-purple" onclick="location.href='/operation/sms/{{ Request::segment(4)??0}}/p'" type="button">ارسال به بیمار</button>
+                                        <a class="btn btn-outline-purple" href="/operation/sms/{{ $data['visit_id'] }}/p">ارسال به بیمار</a>
 
                                         @if (session()->has('result') )
                                             <div class="alert alert-success alert-solid mt-3"

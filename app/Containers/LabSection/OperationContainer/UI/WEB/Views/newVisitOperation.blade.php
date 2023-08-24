@@ -6,7 +6,7 @@
 @php
     if(!Cache::get('operation')) die('');
 
-		$url = env('Credit_SMS_URL_Api');
+		$url = env('CREDIT_SMS_URL_API');
 		$param = array();
 
 		$handler = curl_init($url);
@@ -30,16 +30,18 @@
 
     <script defer="" src="/assets/js/feather.min.js"></script>
     <script defer="" src="/assets/js/font-awesome.min.js"></script>
+
+    <link href="/css/select2.css" rel="stylesheet" />
+
 </head>
 <body class="nav-fixed">
-
 <nav
-    class="is-rtl topnav navbar navbar-expand shadow justify-content-between justify-content-sm-start navbar-light bg-white"
+    class="layout-rtl is-rtl topnav navbar navbar-expand shadow justify-content-between justify-content-sm-start navbar-light bg-white"
     id="snavAccordion">
     <button class="btn btn-icon btn-transparent-dark order-1 order-lg-0 me-2 ms-lg-2 me-lg-0" id="sidebarToggle">
         <i class="bx bx-menu bx-sm"></i>
     </button>
-    <a class="navbar-brand pe-3 ps-4 ps-lg-2" href="/operation/dashboard">پنل اپراتور</a>
+    <a class="navbar-brand pe-3 ps-4 ps-lg-2" href="/operation/dashboard">اپراتور - {{ operationInfo(Cache::get('operation')['id']) }} </a>
 
     <!-- Navbar Items-->
     <ul class="navbar-nav align-items-center ms-auto">
@@ -64,7 +66,6 @@
                 </a>
             </div>
         </li>
-
     </ul>
 </nav>
 <div id="layoutSidenav">
@@ -139,7 +140,7 @@
     </div>
     <div id="layoutSidenav_content">
 
-        <main class="is-rtl">
+        <main class="layout-rtl is-rtl">
 
             <header class="page-header page-header-compact page-header-light border-bottom bg-white mb-4">
                 <div class="container-xl px-4">
@@ -191,25 +192,12 @@
                                     <div class="row gx-3 mb-3">
 
                                         <div class="col-md-6 mt-3">
-                                            <label class="small mb-1" for="inputdate">تاریخ مراجعه</label>
-                                            <input class="form-control" id="inputdate" type="text" name="date"
-                                                   placeholder="تاریخ مراجعه را انتخاب کنید" value="{{old('date')}}">
-                                        </div>
-
-                                        {{--                                        <div class="col-md-6 mt-3">--}}
-                                        {{--                                            <label class="small mb-1" for="patient_id">کـد ملی بیمار</label>--}}
-                                        {{--                                            <input class="form-control" name="patient_id" type="text"--}}
-                                        {{--                                                   value="{{old('patient_id')}}"--}}
-                                        {{--                                                   placeholder="کد ملی ثبت شده بیمار در سامانه">--}}
-                                        {{--                                        </div>--}}
-
-                                        <div class="col-md-6 mt-3">
                                             <label class="small mb-1" for="patient_id">بیمار</label>
-                                            <select class="form-control" name="patient_id" id="patient_id">
+                                            <select style="width: 100%;" dir="ltr" class="js-example-basic-single1 js-states form-control" name="patient_id" id="patient_id">
                                                 <option selected="selected" style="display: none;">بیمار را انتخاب نمایید</option>
                                                 @if ($result['patient'])
                                                     @foreach($result['patient'] as $item)
-                                                        <option value="{{$item['nationalcode']}}">{{$item['name']." ".$item['family']}}</option>
+                                                        <option value="{{$item['nationalcode']}}">{{$item['name']." ".$item['family']." - ".$item['mobile']}}</option>
                                                     @endforeach
                                                 @endif
                                             </select>
@@ -217,19 +205,19 @@
 
                                         <div class="col-md-6 mt-3">
                                             <label class="small mb-1" for="doctor_id">پزشک معالج</label>
-                                            <select class="form-control" name="doctor_id" id="doctor_id">
+                                            <select style="width: 100%" class="form-control js-example-basic-single2" name="doctor_id" id="doctor_id">
                                                 <option selected="selected" style="display: none;">پزشک معالج را انتخاب نمایید</option>
                                                 @if ($result['doctor'])
                                                     @foreach($result['doctor'] as $item)
-                                                        <option value="{{$item['doctorcode']}}">{{$item['name']." ".$item['family']}}</option>
+                                                        <option value="{{$item['doctorcode']}}">{{$item['name']." ".$item['family']." - ".$item['doctorcode']}}</option>
                                                     @endforeach
                                                 @endif
                                             </select>
                                         </div>
 
-                                        <div class="col-md-6 mt-3">
+                                        <div class="col-md-6 mt-3 ">
                                             <label class="small mb-1" for="service_id">نوع خدمت</label>
-                                            <select class="form-control" name="service_id" id="service_id">
+                                            <select style="width: 100%" class="form-control js-example-basic-single3" name="service_id" id="service_id">
                                                 <option selected="selected" style="display: none;">نوع خدمت را انتخاب نمایید</option>
                                                 @if ($result['service'])
                                                     @foreach($result['service'] as $item)
@@ -240,7 +228,13 @@
                                         </div>
 
                                         <div class="col-md-6 mt-3">
-                                            <label class="small mb-1" for="file">ضمیمه</label>
+                                            <label class="small mb-1" for="inputdate">تاریخ مراجعه</label>
+                                            <input class="form-control" id="inputdate" type="text" name="date"
+                                                   placeholder="تاریخ مراجعه را انتخاب کنید" value="{{old('date')}}">
+                                        </div>
+
+                                        <div class="col-md-6 mt-3">
+                                            <label class="small mb-1 " for="file">ضمیمه</label>
                                             <input class="form-control" name="file" type="file">
                                         </div>
 
@@ -291,8 +285,22 @@
 <script src="/assets/js/persian-datepicker.js"></script>
 <script src="/assets/js/state-city.js"></script>
 
+<script src="/js/select2.js"></script>
 
 <script>
+
+    // In your Javascript (external .js resource or <script> tag)
+    $(document).ready(function() {
+        $('.js-example-basic-single1').select2();
+    });
+
+    $(document).ready(function() {
+        $('.js-example-basic-single2').select2();
+    });
+
+    $(document).ready(function() {
+        $('.js-example-basic-single3').select2();
+    });
 
     $(document).ready(function () {
         $('#inputdate').persianDatepicker({
@@ -301,6 +309,7 @@
         });
 
     });
+
 
 </script>
 

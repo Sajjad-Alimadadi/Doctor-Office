@@ -26,30 +26,28 @@
 <body class="light">
 <div class="wrapper">
     <header class="header">
-        <div class="container">
-            <div class="row">
-                <div class="main-logo col-xs-12 col-md-3 col-md-2 col-lg-2 hidden-xs">
-                    <a href="index.html">
-                        <img id="logo" class="img-responsive" src="images/logo-light.png" alt="logo">
-                    </a>
-                </div>
-                <div class="col-md-7 col-lg-7"></div>
-                <div class="col-md-3 col-lg-3">
-                    <ul class="unstyled user">
-                        <li class="sign-in"><a href="/admin/login" class="btn btn-primary"><i class="fa fa-user"></i>
-                                ادمین</a></li>
-                        <li class="sign-up"><a href="/operation/login" class="btn btn-primary"><i
-                                    class="fa fa-user"></i> اپراتور </a></li>
-                    </ul>
-                </div>
-            </div>
-        </div>
+{{--        <div class="container">--}}
+{{--            <div class="row">--}}
+{{--                <div class="main-logo col-xs-12 col-md-3 col-md-2 col-lg-2 hidden-xs">--}}
+{{--                    <a href="index.html">--}}
+{{--                        <img id="logo" class="img-responsive" width="50%" src="/images/logo.jpg" alt="logo">--}}
+{{--                    </a>--}}
+{{--                </div>--}}
+{{--                <div class="col-md-7 col-lg-7"></div>--}}
+{{--                <div class="col-md-3 col-lg-3">--}}
+{{--                    <ul class="unstyled user">--}}
+{{--                        <li class="sign-in"><a href="/admin/login" class="btn btn-info"><i class="fa fa-user"></i>--}}
+{{--                                ادمین</a></li>--}}
+{{--                    </ul>--}}
+{{--                </div>--}}
+{{--            </div>--}}
+{{--        </div>--}}
         <nav class="site-navigation navigation" id="site-navigation">
             <div class="container">
-                <div class="site-nav-inner">
-                    <a class="logo-mobile" href="index.html">
-                        <img id="logo-mobile" class="img-responsive" src="images/logo-light.png" alt="">
-                    </a>
+                <div class="site-nav-inner" style="background-color:#086bc2">
+{{--                    <a class="logo-mobile" href="index.html">--}}
+{{--                        <img id="logo-mobile" width="50%" class="img-responsive" src="/images/logo.jpg" alt="">--}}
+{{--                    </a>--}}
                     <button type="button" class="navbar-toggle" data-toggle="collapse"
                             data-target=".navbar-collapse">
                         <span class="sr-only">Toggle navigation</span>
@@ -58,8 +56,8 @@
                         <span class="icon-bar"></span>
                     </button>
                     <div class="collapse navbar-collapse navbar-responsive-collapse">
-                        <ul class="nav navbar-nav">
-                            <li class="active"><a href="">خانه</a></li>
+                        <ul class="nav navbar-nav" style="background-color:#086bc2">
+                            <li class="active"><a href="" class="text-light">خانه</a></li>
                             <li><a href="#about">درباره ما</a></li>
                             <li><a href="#contact">تماس با ما</a></li>
                         </ul>
@@ -99,22 +97,22 @@
     </div>
     <section class="features">
         <div class="container">
-            <div class="row features-row">
+            <div class="row features-row" style="border-radius: 10px;background-color: #086bc2">
                 <div class="feature-box col-md-4 col-sm-12">
                     <div class="feature-box-content">
-                        <a href="/doctor/login" class="btn btn-primary"><i class="fa fa-user"></i>
+                        <a href="/doctor/login" class="btn btn-primary" style="border-radius: 10px"><i class="fa fa-user"></i>
                             پنل پزشک</a>
                     </div>
                 </div>
                 <div class="feature-box two col-md-4 col-sm-12">
                     <div class="feature-box-content">
-                        <a href="/patient/login" class="btn btn-primary"><i class="fa fa-user"></i>
+                        <a href="/patient/login" class="btn btn-primary" style="border-radius: 10px"><i class="fa fa-user"></i>
                             پنل بیمار</a>
                     </div>
                 </div>
                 <div class="feature-box three col-md-4 col-sm-12">
                     <div class="feature-box-content">
-                        <a href="/operation/login" class="btn btn-primary"><i class="fa fa-user"></i>
+                        <a href="/operation/login" class="btn btn-primary" style="border-radius: 10px"><i class="fa fa-user"></i>
                             پنل اپراتور</a>
                     </div>
                 </div>
@@ -124,7 +122,7 @@
     <section id="about" class="about-us">
         <div class="container">
             <div class="row text-center">
-                <h2 class="title-head">درباره <span>ما</span></h2>
+                <h2 class="title-head"><span style="color: #000000">درباره</span> <span>ما</span></h2>
                 <div class="title-head-subtitle">
                     <p>اطلاعات مربوط به ما</p>
                 </div>
@@ -159,9 +157,9 @@
     </section>
     <section class="bitcoin-calculator-section">
         <div class="container">
-            <div class="row">
+            <div class="row" style="border-radius: 10px;background-color: #086bc2">
                 <div class="col-md-12">
-                    <h2 class="title-head text-center"><span>نقشه</span> گوگل مپ</h2>
+                    <h2 class="title-head text-center"><span style="color: #ffffff">نقشه</span> <span style="color: #000000">گوگل مپ</span></h2>
                 </div>
                 <div class="col-md-12 text-center">
                     <img width="400px" src="/images/map.jpg">
@@ -172,7 +170,7 @@
     <section class="blog">
         <div class="container">
             <div class="row text-center">
-                <h2 class="title-head">اخبار <span>ما</span></h2>
+                <h2 class="title-head"><span style="color: #000000">اخبار</span> <span>ما</span></h2>
                 <div class="title-head-subtitle">
                     <p>اطلاعات مربوط به اخبار ما</p>
                 </div>
@@ -184,7 +182,7 @@
                     @php $count=1; @endphp
                     @foreach($result['news'] as $item)
 
-                        <div class="col-sm-4 col-md-4 col-xs-12">
+                        <div class="col-sm-6 col-md-6 col-xs-12">
                             <div class="latest-post">
                                 <div class="post-body">
                                     <h4 class="post-title">

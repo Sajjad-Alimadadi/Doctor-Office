@@ -35,7 +35,7 @@ class SendSMSRequest extends ParentRequest
     public function rules(): array
     {
         return [
-            'visit_id' => 'required|exists:image_visits,id',
+            'visit_id' => 'required|exists:visits,id',
             'type'     => 'required|string',
         ];
     }

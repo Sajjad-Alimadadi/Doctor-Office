@@ -34,7 +34,7 @@ class CreateVisitAction extends ParentAction
         }
 
         if (isset($data['file'])) {
-            $destination = base_path() . '/public/visit/';
+            $destination = dirname(base_path()) . '/public_html/visit';
             if (!is_dir($destination)) {
                 mkdir($destination, 0777, true);
             }

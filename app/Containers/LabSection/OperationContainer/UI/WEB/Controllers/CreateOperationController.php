@@ -22,7 +22,7 @@ class CreateOperationController extends WebController
             'pass2'        => $request->post('pass2'),
         ]);
         $result = app(CreateOperationAction::class)->run($data);
-        return redirect('/operation/login')->with('SignupResult', 'ثبت نام با موفقیت انجام شد');
+        return redirect('/admin/operation/get')->with('SignupResult', 'ثبت نام با موفقیت انجام شد');
     }
 
 }

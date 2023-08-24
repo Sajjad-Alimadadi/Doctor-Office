@@ -15,9 +15,9 @@ class SendSMSTask extends ParentTask
 
     /**
      * @param array $data
-     * @return int|null
+     * @return int|string|null
      */
-    public function run(array $data): int|null
+    public function run(array $data): int|string|null
     {
         return $this->repository->sendSMS($data);
     }

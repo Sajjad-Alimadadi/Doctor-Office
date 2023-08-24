@@ -19,7 +19,8 @@ class CreateSliderAdminAction extends ParentAction
         unset($data['_token']);
 
         if (isset($data['file'])) {
-            $destination = base_path() . '/public/slider/';
+//            $destination = base_path() . '/public/slider/';
+            $destination = dirname(base_path()) . '/public_html/slider/';
             if (!is_dir($destination)) {
                 mkdir($destination, 0777, true);
             }

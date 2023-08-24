@@ -2,6 +2,8 @@
 
 namespace App\Containers\LabSection\DoctorContainer\UI\WEB\Requests;
 
+use App\Containers\LabSection\AdminContainer\Models\Admin;
+use App\Containers\LabSection\DoctorContainer\Models\Doctor;
 use App\Ship\Parents\Requests\Request as ParentRequest;
 
 class CheckForLoginDoctorRequest extends ParentRequest
@@ -34,10 +36,26 @@ class CheckForLoginDoctorRequest extends ParentRequest
      */
     public function rules(): array
     {
+        $mobile = $this->post('mobile');
+        $pass = md5($this->post('pass'));
+
+        $info = Doctor::query()->where('mobile',$mobile)->where('pass',$pass)->first();
+
+        if ($info === null) {
+            throw \Illuminate\Validation\ValidationException::withMessages(['user' => 'کاربری یافت نشد']);
+        }
+
         return [
             '_token' => 'required',
             'mobile' => 'required',
             'pass'   => 'required'
+        ];
+    }
+    public function attributes(): array
+    {
+        return [
+            'mobile' => 'موبایل را وارد کنید',
+            'pass' => 'پسورد وارد کنید',
         ];
     }
 

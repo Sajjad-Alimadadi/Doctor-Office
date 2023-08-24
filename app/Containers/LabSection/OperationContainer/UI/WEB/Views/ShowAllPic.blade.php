@@ -8,33 +8,36 @@
     <link rel="stylesheet" href="/assets/css/boxicons.css">
     <link rel="stylesheet" href="/assets/css/style.css">
     <link href="/viewer/viewer.css" rel="stylesheet">
-
 </head>
 <body>
-
 <div id="layoutAuthentication">
     <div id="layoutAuthentication_content">
         <main>
             <div class="container-xl px-4 is-rtl">
                 <div class="row justify-content-center">
                     <div class="col-lg-9">
-
                         <div class="card shadow-lg border-0 rounded-lg mt-5">
-                            <div class="card-header justify-content-center"><h3 class="fw-light my-2">نمایش تصویر</h3></div>
-                            <div class="row">
-                                @if ($result)
+                            <div class="card-header justify-content-center"><h3 class="fw-light my-2">نمایش تصویر</h3>
+                            </div>
+                            @if (!empty($result->toArray()))
+                                <div class="row">
                                     @foreach($result as $item)
                                         <div class="card-body col-6">
                                             <a href="/show/{{ Request::segment(2) }}/{{$item['id']}}">
-                                                <img id="image" src="/visit-image/{{ $item['image']}}" width="100%"
-                                                     alt="visit-image-{{ $item['id'] }}">
+                                                @if (pathinfo($item['image'], PATHINFO_EXTENSION) == 'pdf')
+                                                    <span class="bx bxs-file-pdf fs-1"></span> {{ $item['image'] }}
+                                                @else
+                                                    <img id="image" src="/visit-image/{{ $item['image']}}" width="100%"
+                                                         alt="visit-image-{{ $item['id'] }}">
+                                                @endif
                                             </a>
                                         </div>
                                     @endforeach
-                                @endif
-                            </div>
+                                </div>
+                            @else
+                                <div class="alert alert-danger m-5">هیچ تصویری بارگذاری نشده است</div>
+                            @endif
                             <div class="card-footer text-center">
-
                                 @if ($errors->any())
                                     <div class="alert alert-danger">
                                         <ul>
@@ -44,7 +47,6 @@
                                         </ul>
                                     </div>
                                 @endif
-
                             </div>
                         </div>
                     </div>
@@ -59,7 +61,6 @@
         </footer>
     </div>
 </div>
-
 <script src="/assets/js/bootstrap.bundle.min.js"></script>
 <script src="/assets/js/scripts.js"></script>
 <script src="/assets/js/jquery.js"></script>
@@ -67,6 +68,5 @@
 <script src="/assets/js/FormValidation/Bootstrap5.min.js"></script>
 <script src="/assets/js/FormValidation/AutoFocus.min.js"></script>
 <script src="/assets/js/auth-base.js"></script>
-
 </body>
 </html>
